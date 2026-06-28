@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-
     private static Scanner input = new Scanner(System.in);
     private static ConstructionCompany company = new ConstructionCompany("Fantasy Houses", "London");
     private static WaitingList waitingList = new WaitingList();
@@ -15,7 +14,6 @@ public class Main {
 
         while (running) {
             displayMenu();
-
             int option = getIntInput("Choose an option: ");
 
             switch (option) {
@@ -38,9 +36,21 @@ public class Main {
                     scheduleAppointment();
                     break;
                 case 7:
-                    waitingList.displayWaitingList();
+                    modifySelectedHouseDesign();
                     break;
                 case 8:
+                    addCustomerToAllocationQueue();
+                    break;
+                case 9:
+                    company.processAllocationQueue(waitingList);
+                    break;
+                case 10:
+                    waitingList.displayWaitingList();
+                    break;
+                case 11:
+                    company.displayMostPreferredDesignStyles();
+                    break;
+                case 12:
                     running = false;
                     System.out.println("Thank you for choosing Fantasy Houses!");
                     break;
@@ -55,21 +65,25 @@ public class Main {
     private static void displayMenu() {
         System.out.println("\n========== Fantasy Houses ==========");
         System.out.println("1. Register Customer");
-        System.out.println("2. View All Customers");
+        System.out.println("2. View All Customer Records");
         System.out.println("3. Display Available Houses");
         System.out.println("4. Search House by Style");
         System.out.println("5. Purchase House");
         System.out.println("6. Schedule Appointment");
-        System.out.println("7. View Waiting List");
-        System.out.println("8. Exit");
+        System.out.println("7. Modify Selected House Design");
+        System.out.println("8. Add Customer to Allocation Queue");
+        System.out.println("9. Process Allocation Queue by Date Registered");
+        System.out.println("10. View Waiting List");
+        System.out.println("11. Display Most Preferred Design Styles");
+        System.out.println("12. Exit");
         System.out.println("====================================");
     }
 
     private static void loadHouses() {
-        House house1 = company.addHouse(new DetachedHouse("Detached", 220000, "Kilkenny", "20% Complete", 3, true, "Started"));
-        House house2 = company.addHouse(new DetachedHouse("Detached", 300000, "Kildare", "Not Started", 2, false, "Nothing Started"));
+        House house1 = company.addHouse(new DetachedHouse("Detached", 220000, "Kilkenny", "20% Completed", 3, true, "Started"));
+        House house2 = company.addHouse(new DetachedHouse("Detached", 300000, "Kildare", "Not Started", 2, true, "Not Started"));
         House house3 = company.addHouse(new SemiDetachedHouse("Semi-detached", 120000, "Lisburn", "90% Completed", 2, true, "Nearly Complete"));
-        House house4 = company.addHouse(new SemiDetachedHouse("Semi-detached", 150000, "Glin", "50% Complete", 3, true, "Half build completed"));
+        House house4 = company.addHouse(new SemiDetachedHouse("Semi-detached", 150000, "Glin", "50% Completed", 3, true, "Half Build Completed"));
 
         house1.setQuantityAvailable(7);
         house2.setQuantityAvailable(8);
@@ -79,28 +93,36 @@ public class Main {
 
     private static void registerCustomer() {
         System.out.println("\n--- Register Customer ---");
-
         System.out.print("Customer Name: ");
         String name = input.nextLine();
-
         System.out.print("Customer Email: ");
         String email = input.nextLine();
-
         System.out.print("Date Registered: ");
         String date = input.nextLine();
+        System.out.print("Preferred House Type: ");
+        String type = input.nextLine();
+        System.out.print("Preferred Design Style: ");
+        String style = input.nextLine();
+        int bedrooms = getIntInput("Preferred Number of Bedrooms: ");
 
         Customer customer = new Customer(name, email, date, null);
+        customer.selectHousePreference(type, style, bedrooms);
         company.addCustomer(customer);
-
-        System.out.println("Customer registered successfully.");
         System.out.println("Customer ID: " + customer.getCustomerID());
+
+        System.out.print("Add this customer to the allocation queue? (yes/no): ");
+        String queueChoice = input.nextLine();
+
+        if (queueChoice.equalsIgnoreCase("yes") || queueChoice.equalsIgnoreCase("y")) {
+            waitingList.addCustomerByDateRegistered(customer);
+            System.out.println("Customer stored in the allocation queue. Use menu option 9 to allocate by date registered.");
+        }
     }
 
     private static void searchHouseByStyle() {
         System.out.println("\n--- Search House by Style ---");
         System.out.print("Enter style, for example Kilkenny, Kildare, Lisburn, Glin: ");
         String style = input.nextLine();
-
         ArrayList<House> matchingHouses = company.findHousesByStyle(style);
 
         if (matchingHouses.isEmpty()) {
@@ -108,7 +130,6 @@ public class Main {
         } else {
             for (House house : matchingHouses) {
                 house.displayHouseDetails();
-                System.out.println("Quantity Available: " + house.getQuantityAvailable());
                 System.out.println("----------------------");
             }
         }
@@ -116,7 +137,6 @@ public class Main {
 
     private static void purchaseHouse() {
         System.out.println("\n--- Purchase House ---");
-
         company.displayAvailableHouses();
 
         int customerID = getIntInput("Enter Customer ID: ");
@@ -138,14 +158,32 @@ public class Main {
         if (house.isAvailableForPurchase()) {
             company.purchaseHouse(customer, house);
         } else {
-            System.out.println("House is not currently available.");
             waitingList.addCustomer(customer);
         }
     }
 
+    private static void addCustomerToAllocationQueue() {
+        System.out.println("\n--- Add Customer to Allocation Queue ---");
+
+        int customerID = getIntInput("Enter Customer ID: ");
+        Customer customer = company.findCustomerByID(customerID);
+
+        if (customer == null) {
+            System.out.println("Customer not found.");
+            return;
+        }
+
+        if (customer.hasSelectedHouse()) {
+            System.out.println("Customer already has a house allocated.");
+            return;
+        }
+
+        waitingList.addCustomerByDateRegistered(customer);
+        System.out.println("Customer stored in the allocation queue. Use menu option 9 to allocate by date registered.");
+    }
+
     private static void scheduleAppointment() {
         System.out.println("\n--- Schedule Appointment ---");
-
         int customerID = getIntInput("Enter Customer ID: ");
         Customer customer = company.findCustomerByID(customerID);
 
@@ -161,7 +199,6 @@ public class Main {
 
         System.out.print("Enter appointment date: ");
         String date = input.nextLine();
-
         System.out.print("Enter appointment time: ");
         String time = input.nextLine();
 
@@ -170,18 +207,38 @@ public class Main {
         appointment.displayAppointmentDetails();
     }
 
+    private static void modifySelectedHouseDesign() {
+        System.out.println("\n--- Modify Selected House Design ---");
+        int customerID = getIntInput("Enter Customer ID: ");
+        Customer customer = company.findCustomerByID(customerID);
+
+        if (customer == null) {
+            System.out.println("Customer not found.");
+            return;
+        }
+
+        if (!customer.hasSelectedHouse()) {
+            System.out.println("Customer has not selected/purchased a house yet.");
+            return;
+        }
+
+        System.out.println("Current construction status: " + customer.getSelectedHouse().getState());
+        System.out.print("Enter new design style: ");
+        String newStyle = input.nextLine();
+        company.changeDesign(customer, newStyle);
+        customer.getSelectedHouse().displayHouseDetails();
+    }
+
     private static int getIntInput(String message) {
         while (true) {
             System.out.print(message);
-
             if (input.hasNextInt()) {
                 int number = input.nextInt();
                 input.nextLine();
                 return number;
-            } else {
-                System.out.println("Please enter a valid number.");
-                input.nextLine();
             }
+            System.out.println("Please enter a valid number.");
+            input.nextLine();
         }
     }
 }

@@ -9,7 +9,6 @@ public class ConstructionCompany {
     private String companyLocation;
     private Map<String, Map<String, ArrayList<House>>> housesByStyleAndType;
 
-    // Constructor
     public ConstructionCompany(String companyName, String companyLocation) {
         this.companyName = companyName;
         this.companyLocation = companyLocation;
@@ -18,9 +17,8 @@ public class ConstructionCompany {
         this.housesByStyleAndType = new HashMap<>();
     }
 
-    // Add a new customer to the company
     public void addCustomer(Customer customer) {
-        if (customer != null) {
+        if (customer != null && validateCustomer(customer)) {
             customers.add(customer);
             System.out.println("Customer " + customer.getName() + " added successfully");
         } else {
@@ -28,7 +26,13 @@ public class ConstructionCompany {
         }
     }
 
-    // Add a new house to the inventory
+    public boolean validateCustomer(Customer customer) {
+        return customer != null
+                && customer.getName() != null && !customer.getName().isEmpty()
+                && customer.getEmail() != null && customer.getEmail().contains("@")
+                && customer.getDateRegistered() != null && !customer.getDateRegistered().isEmpty();
+    }
+
     public House addHouse(House house) {
         if (validateHouse(house)) {
             houses.add(house);
@@ -39,35 +43,22 @@ public class ConstructionCompany {
         return null;
     }
 
-    // Organize house in the nested map structure
-    private void organizeHouseByStyleAndType(House house){
+    private void organizeHouseByStyleAndType(House house) {
         String style = house.getStyle();
-        String houseType = house.getClass().getSimpleName();
-
+        String houseType = house.getType();
         housesByStyleAndType.putIfAbsent(style, new HashMap<>());
-
         housesByStyleAndType.get(style).putIfAbsent(houseType, new ArrayList<>());
-
         housesByStyleAndType.get(style).get(houseType).add(house);
     }
 
-    // Validate house before adding
     public boolean validateHouse(House house) {
-        if (house == null) {
-            return false;
-        }
-        // Check if price is valid (positive)
-        if (house.getPrice() <= 0) {
-            return false;
-        }
-        // Check if style is not null
-        if (house.getStyle() == null || house.getStyle().isEmpty()) {
-            return false;
-        }
-        return true;
+        return house != null
+                && house.getPrice() > 0
+                && house.getStyle() != null && !house.getStyle().isEmpty()
+                && house.getType() != null && !house.getType().isEmpty()
+                && house.getNumberOfBedrooms() > 0;
     }
 
-    // Purchase a house for a customer
     public void purchaseHouse(Customer customer, House house) {
         if (customer == null || house == null) {
             System.out.println("Invalid customer or house");
@@ -77,81 +68,58 @@ public class ConstructionCompany {
             System.out.println("House not available in inventory");
             return;
         }
-        if (!house.isAvailableForPurchase()){
-            System.out.println("House is out of stock. Will contact customer as soon as a house is available.");
+        if (!house.isAvailableForPurchase()) {
+            System.out.println("House is out of stock. Customer should be added to waiting list.");
             return;
         }
         customer.setSelectedHouse(house);
+        customer.selectHousePreference(house.getType(), house.getStyle(), house.getNumberOfBedrooms());
         house.decrementQuantity();
         System.out.println(customer.getName() + " has purchased the house");
         System.out.println("Remaining Quantity: " + house.getQuantityAvailable());
     }
 
-    // Change design of a house
-    public void changeDesign(House house, String style) {
-        if (house != null && style != null && !style.isEmpty()) {
-            house.setStyle(style);
-            System.out.println("House design changed to " + style);
-        } else {
-            System.out.println("Invalid house or style");
+    public boolean changeDesign(Customer customer, String newStyle) {
+        if (customer == null || customer.getSelectedHouse() == null) {
+            System.out.println("Customer has no selected house to modify.");
+            return false;
         }
+        return customer.getSelectedHouse().modifyDesign(newStyle);
     }
 
-    // Display all available houses organized by style and type
     public void displayAvailableHouses() {
         if (houses.isEmpty()) {
             System.out.println("No houses available");
             return;
         }
         System.out.println("====== AVAILABLE HOUSES ======");
-
-        for (String style : housesByStyleAndType.keySet()) {
-            System.out.println("\n--- Style: " + style + " ---");
-
-            Map<String, ArrayList<House>> typeMap = housesByStyleAndType.get(style);
-            for (String houseType : typeMap.keySet()) {
-                System.out.println("\n  " + houseType + ":");
-                ArrayList<House> housesOfType = typeMap.get(houseType);
-
-                for (House house : housesOfType) {
-                    System.out.println("    House ID: " + house.getHouseID());
-                    System.out.println("    Bedrooms: " + house.getNumberOfBedrooms());
-                    System.out.println("    Price: £" + house.getPrice());
-                    System.out.println("    State: " + house.getState());
-
-                    // Display type-specific details
-                    if (house instanceof DetachedHouse) {
-                        DetachedHouse detached = (DetachedHouse) house;
-                        System.out.println("    Construction Progress: " + detached.getConstructionProgress());
-                        System.out.println("    Private Garden: " + (detached.isPrivateGarden() ? "Yes" : "No"));
-                    } else if (house instanceof SemiDetachedHouse) {
-                        SemiDetachedHouse semiDetached = (SemiDetachedHouse) house;
-                        System.out.println("    Construction Progress: " + semiDetached.getConstructionProgress());
-                        System.out.println("    Shared Wall: " + (semiDetached.isSharedWall() ? "Yes" : "No"));
-                    }
-
-                    System.out.println("    Quantity Available: " + house.getQuantityAvailable());
-                    System.out.println();
-                }
+        for (House house : houses) {
+            house.displayHouseDetails();
+            if (house instanceof DetachedHouse) {
+                DetachedHouse detached = (DetachedHouse) house;
+                System.out.println("Private Garden: " + (detached.isPrivateGarden() ? "Yes" : "No"));
+                System.out.println("Construction Progress: " + detached.getConstructionProgress());
+            } else if (house instanceof SemiDetachedHouse) {
+                SemiDetachedHouse semiDetached = (SemiDetachedHouse) house;
+                System.out.println("Shared Wall: " + (semiDetached.isSharedWall() ? "Yes" : "No"));
+                System.out.println("Construction Progress: " + semiDetached.getConstructionProgress());
             }
+            System.out.println("-----------------------------");
         }
     }
 
-    // Display all customers
     public void displayAllCustomers() {
         if (customers.isEmpty()) {
             System.out.println("No customers registered");
             return;
         }
-        System.out.println("All Customers:");
+        System.out.println("====== CUSTOMER RECORDS ======");
         for (Customer customer : customers) {
-            System.out.println("ID: " + customer.getCustomerID() +
-                    ", Name: " + customer.getName() +
-                    ", Registered: " + customer.getDateRegistered());
+            customer.displayCustomerRecord();
+            System.out.println("-----------------------------");
         }
     }
 
-    // Find customer by ID
     public Customer findCustomerByID(int customerID) {
         for (Customer customer : customers) {
             if (customer.getCustomerID() == customerID) {
@@ -161,67 +129,170 @@ public class ConstructionCompany {
         return null;
     }
 
-    //Find house by ID
     public House findHouseById(int houseID) {
-        for (House house : houses){
-            if (house.getHouseID() == houseID){
+        for (House house : houses) {
+            if (house.getHouseID() == houseID) {
                 return house;
             }
         }
         return null;
     }
 
-    // Find houses by style
     public ArrayList<House> findHousesByStyle(String style) {
         ArrayList<House> result = new ArrayList<>();
-
-        for (String storedStyle : housesByStyleAndType.keySet()) {
-            if (storedStyle.equalsIgnoreCase(style)) {
-                Map<String, ArrayList<House>> typeMap = housesByStyleAndType.get(storedStyle);
-
-                for (ArrayList<House> houseList : typeMap.values()) {
-                    result.addAll(houseList);
-                }
+        for (House house : houses) {
+            if (house.getStyle().equalsIgnoreCase(style)) {
+                result.add(house);
             }
         }
-
         return result;
     }
 
-    // Find houses by style and type
     public ArrayList<House> findHousesByStyleAndType(String style, String houseType) {
-        if (housesByStyleAndType.containsKey(style)) {
-            Map<String, ArrayList<House>> typeMap = housesByStyleAndType.get(style);
-            if (typeMap.containsKey(houseType)) {
-                return typeMap.get(houseType);
+        ArrayList<House> result = new ArrayList<>();
+        for (House house : houses) {
+            if (house.getStyle().equalsIgnoreCase(style) && house.getType().equalsIgnoreCase(houseType)) {
+                result.add(house);
             }
         }
-        return new ArrayList<>();
+        return result;
     }
 
-    // Getters
-    public ArrayList<Customer> getCustomers() {
-        return customers;
+    public House findHouseByRequirements(String type, String style, int bedrooms) {
+        for (House house : houses) {
+            if (house.getType().equalsIgnoreCase(type)
+                    && house.getStyle().equalsIgnoreCase(style)
+                    && house.getNumberOfBedrooms() == bedrooms) {
+                return house;
+            }
+        }
+        return null;
     }
 
-    public ArrayList<House> getHouses() {
-        return houses;
+    public void allocateCustomerByPreference(Customer customer, WaitingList waitingList) {
+        if (customer == null) {
+            System.out.println("Invalid customer.");
+            return;
+        }
+
+        if (customer.getPreferredHouseType() == null || customer.getPreferredDesignStyle() == null) {
+            System.out.println("Customer does not have a stored house preference.");
+            return;
+        }
+
+        if (customer.hasSelectedHouse()) {
+            System.out.println(customer.getName() + " has already been allocated a house.");
+            return;
+        }
+
+        House preferredHouse = findHouseByRequirements(
+                customer.getPreferredHouseType(),
+                customer.getPreferredDesignStyle(),
+                customer.getPreferredBedrooms()
+        );
+
+        if (preferredHouse == null) {
+            System.out.println("No matching house found for this customer's preference.");
+            return;
+        }
+
+        System.out.println("Preferred house found: "
+                + preferredHouse.getType() + ", "
+                + preferredHouse.getNumberOfBedrooms() + " bedroom, "
+                + preferredHouse.getStyle());
+
+        if (preferredHouse.isAvailableForPurchase()) {
+            purchaseHouse(customer, preferredHouse);
+            System.out.println("ALLOCATED: " + customer.getName());
+        } else {
+            waitingList.addCustomer(customer);
+            System.out.println("No houses currently available for this preference.");
+            System.out.println("WAITING LIST: " + customer.getName());
+        }
     }
 
-    public String getCompanyName() {
-        return companyName;
+    public void processAllocationQueue(WaitingList waitingList) {
+        if (waitingList == null || waitingList.isEmpty()) {
+            System.out.println("Allocation queue is empty.");
+            return;
+        }
+
+        int customersToProcess = waitingList.getSize();
+        ArrayList<Customer> stillWaiting = new ArrayList<>();
+
+        System.out.println("====== ALLOCATION QUEUE PROCESSING ======");
+        System.out.println("Customers are processed in date registered order.");
+
+        for (int i = 0; i < customersToProcess; i++) {
+            Customer customer = waitingList.removeCustomer();
+
+            if (customer == null) {
+                continue;
+            }
+
+            if (customer.hasSelectedHouse()) {
+                System.out.println("SKIPPED: " + customer.getName() + " already has a house allocated.");
+                continue;
+            }
+
+            House preferredHouse = findHouseByRequirements(
+                    customer.getPreferredHouseType(),
+                    customer.getPreferredDesignStyle(),
+                    customer.getPreferredBedrooms()
+            );
+
+            if (preferredHouse != null && preferredHouse.isAvailableForPurchase()) {
+                purchaseHouse(customer, preferredHouse);
+                System.out.println("ALLOCATED BY QUEUE: " + customer.getName()
+                        + " - Registered: " + customer.getDateRegistered());
+            } else {
+                stillWaiting.add(customer);
+                System.out.println("STILL WAITING: " + customer.getName()
+                        + " - Registered: " + customer.getDateRegistered());
+            }
+        }
+
+        for (Customer customer : stillWaiting) {
+            waitingList.addCustomerByDateRegistered(customer);
+        }
+
+        System.out.println("====== QUEUE PROCESSING COMPLETE ======");
     }
 
-    public String getCompanyLocation() {
-        return companyLocation;
+    public void displayMostPreferredDesignStyles() {
+        System.out.println("====== MOST PREFERRED DESIGN STYLES ======");
+        displayMostPreferredStyleForType("Detached");
+        displayMostPreferredStyleForType("Semi-detached");
     }
 
-    // Setters
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    private void displayMostPreferredStyleForType(String houseType) {
+        Map<String, Integer> styleCounts = new HashMap<>();
+
+        for (Customer customer : customers) {
+            if (customer.getPreferredHouseType() != null && customer.getPreferredHouseType().equalsIgnoreCase(houseType)) {
+                String style = customer.getPreferredDesignStyle();
+                styleCounts.put(style, styleCounts.getOrDefault(style, 0) + 1);
+            }
+        }
+
+        String mostPreferredStyle = "None";
+        int highestCount = 0;
+
+        for (String style : styleCounts.keySet()) {
+            if (styleCounts.get(style) > highestCount) {
+                highestCount = styleCounts.get(style);
+                mostPreferredStyle = style;
+            }
+        }
+
+        System.out.println(houseType + ": " + mostPreferredStyle + " (" + highestCount + " selections)");
     }
 
-    public void setCompanyLocation(String companyLocation) {
-        this.companyLocation = companyLocation;
-    }
+    public ArrayList<Customer> getCustomers() { return customers; }
+    public ArrayList<House> getHouses() { return houses; }
+    public String getCompanyName() { return companyName; }
+    public String getCompanyLocation() { return companyLocation; }
+
+    public void setCompanyName(String companyName) { this.companyName = companyName; }
+    public void setCompanyLocation(String companyLocation) { this.companyLocation = companyLocation; }
 }
