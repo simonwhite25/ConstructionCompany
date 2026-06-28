@@ -33,7 +33,6 @@ public class ConstructionCompany {
         if (validateHouse(house)) {
             houses.add(house);
             organizeHouseByStyleAndType(house);
-            System.out.println("House added successfully");
             return house;
         }
         System.out.println("House validation failed");
@@ -175,12 +174,17 @@ public class ConstructionCompany {
     // Find houses by style
     public ArrayList<House> findHousesByStyle(String style) {
         ArrayList<House> result = new ArrayList<>();
-        if (housesByStyleAndType.containsKey(style)) {
-            Map<String, ArrayList<House>> typeMap = housesByStyleAndType.get(style);
-            for (ArrayList<House> houseList : typeMap.values()) {
-                result.addAll(houseList);
+
+        for (String storedStyle : housesByStyleAndType.keySet()) {
+            if (storedStyle.equalsIgnoreCase(style)) {
+                Map<String, ArrayList<House>> typeMap = housesByStyleAndType.get(storedStyle);
+
+                for (ArrayList<House> houseList : typeMap.values()) {
+                    result.addAll(houseList);
+                }
             }
         }
+
         return result;
     }
 

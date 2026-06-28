@@ -3,11 +3,12 @@ public class DetachedHouse extends House{
     private String constructionProgress;
 
     //super method to call the parent class
-    public DetachedHouse(String type, String style, double price, String state, int numberOfBedrooms, boolean privateGarden, String constructionProgress)
+    public DetachedHouse(String type, double price, String style, String state, int numberOfBedrooms, boolean privateGarden, String constructionProgress)
     {
-        super(type, style, price, state, numberOfBedrooms);
+        super(type, price, style, state, numberOfBedrooms);
         this.privateGarden = privateGarden;
         this.constructionProgress = constructionProgress;
+
     }
 
     public void displayDetachedFeatures(){

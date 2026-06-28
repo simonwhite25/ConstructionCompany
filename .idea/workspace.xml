@@ -32,61 +32,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.5323066224377264" />
-      <entry key="MS500" value="2.491972619917698" />
-      <entry key="S2" value="6.261670647559402" />
-      <entry key="S5" value="8.633738317624426" />
-      <entry key="S10" value="9.718332692191321" />
-      <entry key="S30" value="10.54857256734026" />
-      <entry key="S60" value="10.771103633454615" />
-      <entry key="M2" value="10.889771166964236" />
-      <entry key="M5" value="12.884023586100152" />
-      <entry key="M10" value="29.717750939910545" />
-      <entry key="M15" value="52.53576007838745" />
-      <entry key="M30" value="105.02214554797769" />
-      <entry key="H1" value="161.25294734198621" />
-      <entry key="H2" value="236.76718460879567" />
-      <entry key="H4" value="359.4365995234653" />
-      <entry key="D1" value="1402.3586710254276" />
-      <entry key="W1" value="3503.935422251105" />
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0000000004261262" />
+      <entry key="S2" value="1.0045434376622964" />
+      <entry key="S5" value="1.1155989759881062" />
+      <entry key="S10" value="1.3402031754963317" />
+      <entry key="S30" value="1.7582806774169213" />
+      <entry key="S60" value="2.152756140135504" />
+      <entry key="M2" value="3.210346726470067" />
+      <entry key="M5" value="7.900131476902308" />
+      <entry key="M10" value="16.101956832010003" />
+      <entry key="M15" value="25.498952427908698" />
+      <entry key="M30" value="62.081949839564004" />
+      <entry key="H1" value="129.21257389721552" />
+      <entry key="H2" value="225.0665714634769" />
+      <entry key="H4" value="365.33281083251353" />
+      <entry key="D1" value="1430.5820314454345" />
+      <entry key="W1" value="3558.439417780381" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
       <entry key="MS500" value="0.0" />
-      <entry key="S2" value="0.0" />
-      <entry key="S5" value="0.0" />
-      <entry key="S10" value="0.0" />
-      <entry key="S30" value="4.7526187190491095E-162" />
-      <entry key="S60" value="2.1839635455948926E-81" />
-      <entry key="M2" value="4.879862757166033E-41" />
-      <entry key="M5" value="1.077869130031394E-16" />
-      <entry key="M10" value="2.155270084411889E-8" />
-      <entry key="M15" value="1.48477986295751E-5" />
-      <entry key="M30" value="0.011711216759850322" />
-      <entry key="H1" value="0.3502856086035052" />
-      <entry key="H2" value="1.955581903518955" />
-      <entry key="H4" value="4.752558817376752" />
-      <entry key="D1" value="14.401873176563335" />
-      <entry key="W1" value="33.307923945106324" />
+      <entry key="S2" value="2.384470632347062E-95" />
+      <entry key="S5" value="1.4156529268159932E-38" />
+      <entry key="S10" value="1.1898121392959452E-19" />
+      <entry key="S30" value="4.918425889583173E-7" />
+      <entry key="S60" value="7.013149000846272E-4" />
+      <entry key="M2" value="0.026482646123388486" />
+      <entry key="M5" value="0.23642643301504992" />
+      <entry key="M10" value="0.5331572634932146" />
+      <entry key="M15" value="0.7509153999937501" />
+      <entry key="M30" value="1.1549658847032582" />
+      <entry key="H1" value="1.667719866945973" />
+      <entry key="H2" value="3.1054085266598164" />
+      <entry key="H4" value="5.853149378482292" />
+      <entry key="D1" value="15.968695872016308" />
+      <entry key="W1" value="35.16793451486101" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="1.4801103453545068" />
-      <entry key="MS500" value="2.4646111287942074" />
-      <entry key="S2" value="6.228852434980117" />
-      <entry key="S5" value="8.614283618716003" />
-      <entry key="S10" value="9.70720302834643" />
-      <entry key="S30" value="10.544510661769298" />
-      <entry key="S60" value="10.769025912223105" />
-      <entry key="M2" value="10.888717365649386" />
-      <entry key="M5" value="12.883227588259288" />
-      <entry key="M10" value="29.71594500015991" />
-      <entry key="M15" value="52.5333531667759" />
-      <entry key="M30" value="105.03114989645142" />
-      <entry key="H1" value="161.5992632083594" />
-      <entry key="H2" value="238.71541570692597" />
-      <entry key="H4" value="364.17974762271723" />
-      <entry key="D1" value="1416.7536668182308" />
-      <entry key="W1" value="3537.241259353564" />
+      <entry key="MS100" value="3.2077652559422084E-6" />
+      <entry key="MS500" value="0.07966003920903741" />
+      <entry key="S2" value="0.5323854590448781" />
+      <entry key="S5" value="0.842532544270171" />
+      <entry key="S10" value="1.1384074591619169" />
+      <entry key="S30" value="1.6547837688530675" />
+      <entry key="S60" value="2.0938517603961313" />
+      <entry key="M2" value="3.201438662971054" />
+      <entry key="M5" value="8.111123821588388" />
+      <entry key="M10" value="16.61093930509115" />
+      <entry key="M15" value="26.2268566644999" />
+      <entry key="M30" value="63.217952166328615" />
+      <entry key="H1" value="130.8660281939468" />
+      <entry key="H2" value="228.15953484371272" />
+      <entry key="H4" value="371.17409085188876" />
+      <entry key="D1" value="1446.5433353629153" />
+      <entry key="W1" value="3593.6051713491047" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -119,10 +119,10 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Problems",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "editor.reader.mode",
+    "settings.editor.selected.configurable": "Runtime.Targets.Configurable",
     "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
   },
@@ -145,66 +145,11 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration name="Unnamed" type="JBossConfiguration" factoryName="Local" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
-      <option name="UPDATING_POLICY" value="restart-server" />
-      <deployment />
-      <server-settings>
-        <option name="BINDING_SET_NAME" value="" />
-        <option name="SERVER" />
-        <option name="DOMAIN" value="false" />
-        <option name="SERVER_GROUP" />
-        <option name="USERNAME" value="" />
-        <option name="CREDENTIAL_ALIAS" />
-      </server-settings>
-      <predefined_log_file enabled="true" id="JBoss" />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="57523" />
-      </RunnerSettings>
-      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
-        <option name="USE_ENV_VARIABLES" value="true" />
-        <STARTUP>
-          <option name="USE_DEFAULT" value="true" />
-          <option name="SCRIPT" value="" />
-          <option name="VM_PARAMETERS" value="" />
-          <option name="PROGRAM_PARAMETERS" value="" />
-        </STARTUP>
-        <SHUTDOWN>
-          <option name="USE_DEFAULT" value="true" />
-          <option name="SCRIPT" value="" />
-          <option name="VM_PARAMETERS" value="" />
-          <option name="PROGRAM_PARAMETERS" value="" />
-        </SHUTDOWN>
-      </ConfigurationWrapper>
-      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
-        <option name="USE_ENV_VARIABLES" value="true" />
-        <STARTUP>
-          <option name="USE_DEFAULT" value="true" />
-          <option name="SCRIPT" value="" />
-          <option name="VM_PARAMETERS" value="" />
-          <option name="PROGRAM_PARAMETERS" value="" />
-        </STARTUP>
-        <SHUTDOWN>
-          <option name="USE_DEFAULT" value="true" />
-          <option name="SCRIPT" value="" />
-          <option name="VM_PARAMETERS" value="" />
-          <option name="PROGRAM_PARAMETERS" value="" />
-        </SHUTDOWN>
-      </ConfigurationWrapper>
-      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
-        <option name="USE_ENV_VARIABLES" value="true" />
-        <STARTUP>
-          <option name="USE_DEFAULT" value="true" />
-          <option name="SCRIPT" value="" />
-          <option name="VM_PARAMETERS" value="" />
-          <option name="PROGRAM_PARAMETERS" value="" />
-        </STARTUP>
-        <SHUTDOWN>
-          <option name="USE_DEFAULT" value="true" />
-          <option name="SCRIPT" value="" />
-          <option name="VM_PARAMETERS" value="" />
-          <option name="PROGRAM_PARAMETERS" value="" />
-        </SHUTDOWN>
-      </ConfigurationWrapper>
+    <configuration name="Main" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="25" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="jdk.jpackage.main.Main" />
+      <option name="PROGRAM_PARAMETERS" value="$Classpath$ConstructionCompany" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -241,7 +186,7 @@
       <workItem from="1782223984050" duration="36274000" />
       <workItem from="1782597472811" duration="132000" />
       <workItem from="1782597616471" duration="483000" />
-      <workItem from="1782598133652" duration="1338000" />
+      <workItem from="1782598133652" duration="6090000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <option name="closed" value="true" />
@@ -267,7 +212,23 @@
       <option name="project" value="LOCAL" />
       <updated>1782583151246</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="update required to fix">
+      <option name="closed" value="true" />
+      <created>1782599885866</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1782599885866</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Revert &quot;Revert &quot;first commit&quot;&quot;&#10;&#10;This reverts commit 5415dfe0">
+      <option name="closed" value="true" />
+      <created>1782599948607</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1782599948607</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -298,7 +259,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="first commit" />
+    <MESSAGE value="update required to fix" />
+    <MESSAGE value="Revert &quot;Revert &quot;first commit&quot;&quot;&#10;&#10;This reverts commit 5415dfe0" />
+    <option name="LAST_COMMIT_MESSAGE" value="Revert &quot;Revert &quot;first commit&quot;&quot;&#10;&#10;This reverts commit 5415dfe0" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
